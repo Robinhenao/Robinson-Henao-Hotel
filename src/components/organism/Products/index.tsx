@@ -1,3 +1,4 @@
+import React from 'react';
 import { Badge } from '@/src/components/ui/badge';
 import {
   Card,
@@ -14,158 +15,96 @@ import {
   TableHeader,
   TableRow,
 } from '@/src/components/ui/table';
+import { useQuery } from '@apollo/client';
+import { GET_PRODUCTS } from '@/src/utils/gql/queries/products';
+import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
+import { Button } from '@/src/components/ui/button';
+import { useRouter } from 'next/router';
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  stock: number;
+}
 
 export default function Component() {
+  const [products, setProducts] = React.useState([]);
+  const router = useRouter();
+  useQuery(GET_PRODUCTS, {
+    onCompleted: (data) => {
+      setProducts(data.productss);
+    },
+  });
   return (
     <Card>
       <CardHeader className='px-7'>
-        <CardTitle>Products</CardTitle>
-        <CardDescription>Recent orders from your store.</CardDescription>
+        <div>
+          <CardTitle>Products</CardTitle>
+          <CardDescription>Products from your store.</CardDescription>
+        </div>
+        <Button
+          onClick={() => router.push('/products/new')}
+          className='px-10'
+          variant='default'
+        >
+          Nuevo
+        </Button>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Customer</TableHead>
-              <TableHead className='hidden sm:table-cell'>Type</TableHead>
-              <TableHead className='hidden sm:table-cell'>Status</TableHead>
-              <TableHead className='hidden md:table-cell'>Date</TableHead>
-              <TableHead className='text-right'>Amount</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead className='hidden sm:table-cell'>Name</TableHead>
+              <TableHead className='hidden sm:table-cell'>
+                Description
+              </TableHead>
+              <TableHead className='hidden md:table-cell'>Stock</TableHead>
+              <TableHead className='text-right'>Price</TableHead>
+              <TableHead className='text-right'>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow className='bg-accent'>
-              <TableCell>
-                <div className='font-medium'>Liam Johnson</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  liam@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Sale</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='secondary'>
-                  Fulfilled
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-23</TableCell>
-              <TableCell className='text-right'>$250.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <div className='font-medium'>Olivia Smith</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  olivia@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Refund</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='outline'>
-                  Declined
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-24</TableCell>
-              <TableCell className='text-right'>$150.00</TableCell>
-            </TableRow>
-            {/* <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Liam Johnson</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              liam@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-23
-                          </TableCell>
-                          <TableCell className="text-right">$250.00</TableCell>
-                        </TableRow> */}
-            <TableRow>
-              <TableCell>
-                <div className='font-medium'>Noah Williams</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  noah@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Subscription</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='secondary'>
-                  Fulfilled
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-25</TableCell>
-              <TableCell className='text-right'>$350.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <div className='font-medium'>Emma Brown</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  emma@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Sale</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='secondary'>
-                  Fulfilled
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-26</TableCell>
-              <TableCell className='text-right'>$450.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <div className='font-medium'>Liam Johnson</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  liam@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Sale</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='secondary'>
-                  Fulfilled
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-23</TableCell>
-              <TableCell className='text-right'>$250.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <div className='font-medium'>Olivia Smith</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  olivia@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Refund</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='outline'>
-                  Declined
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-24</TableCell>
-              <TableCell className='text-right'>$150.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <div className='font-medium'>Emma Brown</div>
-                <div className='hidden text-sm text-muted-foreground md:inline'>
-                  emma@example.com
-                </div>
-              </TableCell>
-              <TableCell className='hidden sm:table-cell'>Sale</TableCell>
-              <TableCell className='hidden sm:table-cell'>
-                <Badge className='text-xs' variant='secondary'>
-                  Fulfilled
-                </Badge>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>2023-06-26</TableCell>
-              <TableCell className='text-right'>$450.00</TableCell>
-            </TableRow>
+            {products.map((product: Product) => (
+              <TableRow key={product.id} className='bg-accent'>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage src={product.image} />
+                  </Avatar>
+                </TableCell>
+                <TableCell>
+                  <div className='font-medium'>{product.name}</div>
+                </TableCell>
+                <TableCell className='hidden sm:table-cell'>
+                  {product.description}
+                </TableCell>
+                <TableCell className='hidden sm:table-cell'>
+                  <Badge className='text-xs' variant='secondary'>
+                    {product.stock}
+                  </Badge>
+                </TableCell>
+                <TableCell className='text-right'>${product.price}</TableCell>
+                <TableCell className='hidden md:table-cell'>
+                  <div className='flex flex-row gap-5'>
+                    <Badge
+                      onClick={() => router.push(`/products/${product.id}`)}
+                      className='text-xs justify-center w-24'
+                      variant='default'
+                    >
+                      Edit
+                    </Badge>
+                    <Badge
+                      className='text-xs justify-center w-24'
+                      variant='default'
+                    >
+                      Delete
+                    </Badge>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>

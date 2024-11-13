@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { GET_USER_BY_ID } from '@/src/utils/gql/queries/users';
-import { CREATE_USER } from '@/src/utils/gql/mutations/users';
+import { CREATE_USER, UPDATE_USER } from '@/src/utils/gql/mutations/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -19,12 +19,8 @@ import { Input } from '@/src/components/ui/input';
 import { nanoid } from 'nanoid';
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  email: z.string().min(2, {
-    message: 'email must be at least 2 characters.',
-  }),
+  username: z.string(),
+  email: z.string(),
 });
 
 export async function getServerSideProps(context: { params: { id: string } }) {
@@ -47,6 +43,7 @@ const Index = ({ id }: { id: string }) => {
     },
   });
   const [userMutation] = useMutation(CREATE_USER);
+  const [updateMutation] = useMutation(UPDATE_USER);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,36 +55,51 @@ const Index = ({ id }: { id: string }) => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    const passsword = nanoid();
-    try {
-      const usuario = await createUser({
-        name: values.username,
-        email: values.email,
-        password: passsword,
-      }).then(async (res) => {
-        const user = res.usuario;
-        await userMutation({
-          variables: {
-            data: {
-              accounts: {
-                create: {
-                  type: user.identities[0].provider,
-                  provider: user.identities[0].provider,
-                  providerAccountId: user.user_id,
+    if (id === 'new') {
+      const passsword = nanoid();
+      try {
+        const usuario = await createUser({
+          name: values.username,
+          email: values.email,
+          password: passsword,
+        }).then(async (res) => {
+          const user = res.usuario;
+          await userMutation({
+            variables: {
+              data: {
+                accounts: {
+                  create: {
+                    type: user.identities[0].provider,
+                    provider: user.identities[0].provider,
+                    providerAccountId: user.user_id,
+                  },
                 },
+                name: user.name,
+                role: 'USER',
+                email: user.email,
+                image: user.picture,
               },
-              name: user.name,
-              role: 'USER',
-              email: user.email,
-              image: user.picture,
+            },
+          });
+        });
+        console.log(usuario);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      await updateMutation({
+        variables: {
+          where: { id: id },
+          data: {
+            name: {
+              set: values.username,
+            },
+            email: {
+              set: values.email,
             },
           },
-        });
+        },
       });
-      console.log(usuario);
-    } catch (e) {
-      console.log(e);
     }
   }
 
