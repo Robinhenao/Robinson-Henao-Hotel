@@ -28,13 +28,12 @@ export const getAuth0Token = async () => {
         'did=s%253Av0%253A3928d909-4357-44a4-bea4-f9f89566f63c.hOKSP5XpWyrvSlfBiKHibZytc3ZVNl0gEzDpltl7goQ; did_compat=s%253Av0%253A3928d909-4357-44a4-bea4-f9f89566f63c.hOKSP5XpWyrvSlfBiKHibZytc3ZVNl0gEzDpltl7goQ',
       'Content-Type': 'application/json',
     },
-    body: '{"client_id":"a4W0w701SsYcEWYeBGpQl6gsGsJxZdA2","client_secret":"G2Zj9nP_OU9PbxvGDCeGEwYQhUkYlpLQAyDm1KeP73xsvOCCK23Fo6eksqHd5gWV","audience":"https://inventarios20242.us.auth0.com/api/v2/","grant_type":"client_credentials"}',
+    body: '{"client_id":"wgkb5yWmOClfm8R5Krpt1jz7ZGgoGjLI","client_secret":"3Ghezx3F5CMbRfFjeaU2e1nGbEz1zI-T-nmeuRkL2FnAt7QBiV4Ndemoc5dUPttZ","audience":"https://hotel20242.us.auth0.com/api/v2/","grant_type":"client_credentials"}'
   };
 
   const res = fetch(
-    'https://inventarios20242.us.auth0.com/oauth/token',
-    options
-  ).then((response) => response.json());
+    'https://hotel20242.us.auth0.com/oauth/token',
+    options).then((response) => response.json());
   return res;
 };
 
@@ -43,7 +42,7 @@ export const createAuth0User = async (
   token: any,
   tokenType: any
 ) => {
-  const url = `https://inventarios20242.us.auth0.com/api/v2/users`;
+  const url = `https://dev-cmdr8f34n8e8vtvw.us.auth0.com/api/v2/users`;
   const headers = {
     Authorization: `${tokenType} ${token}`,
   };
