@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Habitacion" ALTER COLUMN "precio" SET DATA TYPE TEXT,
+ALTER COLUMN "numeroCamas" SET DATA TYPE TEXT;

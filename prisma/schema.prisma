@@ -13,6 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Habitacion {
+  id            String  @id @default(cuid())
+  nombre        String
+  bloque        String
+  sesion        String
+  precio        String
+  numeroCamas   String
+}
+
+
 model Account {
   userId            String  @map("user_id")
   type              String
