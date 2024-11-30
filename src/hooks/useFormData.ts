@@ -1,28 +1,24 @@
 import { useRef, useState } from 'react';
 
-const useFormData = initial => {
-  const form = useRef(initial);
+type FormData = Record<string, any>;
 
-  const [formData, setFormData] = useState({} as any);
+const useFormData = <T extends FormData>(initial: T) => {
+  const form = useRef<HTMLFormElement | null>(null); // Correctly type the form ref
 
-  const getFormData: any = () => {
+  const [formData, setFormData] = useState<FormData>({});
+
+  const getFormData = (): FormData => {
+    if (!form.current) return {}; // Add null check
     const fd = new FormData(form.current);
-
-    const obj = {};
+    const obj: FormData = {};
     fd.forEach((value, key) => {
       const str = key.split(':');
-
       if (str.length > 1) {
-        obj[str[0]] = {
-          ...obj[str[0]],
-
-          [str[1]]: value,
-        };
+        obj[str[0]] = { ...obj[str[0]], [str[1]]: value };
       } else {
         obj[str[0]] = value;
       }
     });
-
     return obj;
   };
 
