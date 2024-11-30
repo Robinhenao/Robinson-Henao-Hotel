@@ -4,6 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 https://robinson-henao-hotel.vercel.app/
 
 ##integrantes
+
 Robinson Dario Henao Botero
 Sulay Gisela Martinez Barreto
 
