@@ -12,7 +12,7 @@ const makePost = (url: string, body: string, options: object) => {
   });
 };
 
-const makeJSONPost = (url: string, data: any, options: { headers: {} }) => {
+const makeJSONPost = (url: string, data: any, options: { headers: { } }) => {
   const body = JSON.stringify(data);
   const headers = options.headers || {};
   headers['Content-Type'] = 'application/json';

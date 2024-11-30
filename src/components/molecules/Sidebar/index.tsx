@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Bell, Home, LineChart, Package, Package2, ShoppingCart, Users } from 'lucide-react';
+import { Bell, Home, LineChart, Package2, Users } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 
 const Index = () => {
   const { data: session } = useSession();
+
   return (
     <div className='hidden border-r bg-muted/40 md:block'>
       <div className='flex h-full max-h-screen flex-col gap-2'>
@@ -30,7 +31,6 @@ const Index = () => {
               <Home className='h-4 w-4' />
               Mis Reservas
             </Link>
-           
             <Link
               href='/rooms'
               className='flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary'
@@ -55,19 +55,25 @@ const Index = () => {
           </nav>
         </div>
         <div className='mt-auto p-4'>
-          <Card x-chunk='dashboard-02-chunk-0'>
-            <CardHeader className='flex flex-row gap-5 justify-center items-center p-2 pt-0 md:p-4'>
-              <div>
-                <CardTitle>{session?.user?.name}</CardTitle>
-                <CardTitle>{session?.user?.email}</CardTitle>
-                <CardTitle>Admin</CardTitle>
+          <Card>
+            <CardHeader className='flex flex-row gap-4 justify-center items-center p-2 pt-0 md:p-4'>
+              <div className='text-center'>
+                <CardTitle className='text-sm md:text-base font-medium truncate max-w-[180px]'>
+                  {session?.user?.name || 'Usuario'}
+                </CardTitle>
+                <CardTitle className='text-xs md:text-sm text-muted text-black truncate max-w-[180px]'>
+                  {session?.user?.email || 'Correo no disponible'}
+                </CardTitle>
+                <CardTitle className='text-xs md:text-sm text-primary truncate max-w-[180px]'>
+                  {session?.user?.role || 'Rol no especificado'}
+                </CardTitle>
               </div>
               <Avatar>
                 <AvatarImage src={session?.user?.image ?? 'https://github.com/shadcn.png'} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </CardHeader>
-            <CardContent className=' flex justify-center items-center p-2 pt-0 md:p-4 md:pt-0'></CardContent>
+            <CardContent className='flex justify-center items-center p-2 pt-0 md:p-4 md:pt-0'></CardContent>
           </Card>
         </div>
       </div>

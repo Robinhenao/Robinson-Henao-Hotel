@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_HABITACIONES } from '@/src/utils/gql/queries/habitaciones';
 import { GET_RESERVAS } from '@/src/utils/gql/queries/reservas';
@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/ca
 import { Button } from '@/src/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/src/components/ui/table';
 import Swal from 'sweetalert2';
-import { useSession } from 'next-auth/react'; // Importa useSession
+import { useSession } from 'next-auth/react';
 
 interface Habitacion {
   id: string;
@@ -23,7 +23,7 @@ export default function HabitacionesList() {
     fechaFin: '',
   });
 
-  const [selectedHabitacion, setSelectedHabitacion] = useState<string | null>(null);
+  const [] = useState<string | null>(null);
 
   // Query para obtener las habitaciones
   const { loading: loadingHabitaciones, error: errorHabitaciones, data: habitacionesData } = useQuery(GET_HABITACIONES);
@@ -34,7 +34,7 @@ export default function HabitacionesList() {
   // Mutation para crear una reserva
   const [createReserva] = useMutation(CREATE_RESERVA);
 
-  const { data: session, status } = useSession(); // Obtén la sesión del usuario
+  const { data: session} = useSession(); // Obtén la sesión del usuario
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
