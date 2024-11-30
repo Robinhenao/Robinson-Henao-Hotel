@@ -30,6 +30,10 @@ export const CustomHabitacionType = gql`
     id: ID!
   }
 
+  type Query {
+    getHabitaciones: [Habitacion!]!
+  }
+
   type Mutation {
     createHabitacion(data: HabitacionCreateInput!): Habitacion!
     upsertHabitacion(

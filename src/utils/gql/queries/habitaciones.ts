@@ -1,8 +1,8 @@
 import { gql } from 'apollo-server-micro';
 
-export const GET_HABITACIONES = gql`
-  query GetHabitaciones {
-    habitaciones {
+const GET_HABITACIONES = gql`
+  query getHabitaciones {
+    getHabitaciones {
       id
       nombre
       bloque
@@ -12,3 +12,5 @@ export const GET_HABITACIONES = gql`
     }
   }
 `;
+
+export { GET_HABITACIONES};

@@ -1,7 +1,16 @@
 import prisma from 'config/prisma';
 
 const HabitacionCustomResolvers = {
-  Query: {},
+  Query: {
+    getHabitaciones: async () => {
+      try {
+        return await prisma.habitacion.findMany();
+      } catch (error) {
+        console.error("Error al listar las habitaciones:", error);
+        throw new Error("No se pudieron obtener las habitaciones.");
+      }
+    },
+  },
   Mutation: {
     createHabitacion: async (_: any, args: any) => {
       try {
