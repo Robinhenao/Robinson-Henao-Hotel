@@ -12,7 +12,7 @@ const ReservaCustomResolvers = {
       }
     },
 
-    // Obtener una reserva por ID
+    
     getReserva: async (_: any, args: { id: string }) => {
       try {
         return await prisma.reserva.findUnique({

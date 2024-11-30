@@ -16,16 +16,9 @@ export const CustomReservaType = gql`
     usuarioId: String!
   }
 
-  input ReservaUpdateInput {
-    fechaLlegada: DateTime   
-    fechaSalida: DateTime
-    habitacionId: String!
-    usuarioId: String!
-  }
-
-
+  
   input ReservaWhereUniqueInput {
-    id: ID!
+    id: String!
   }
 
 

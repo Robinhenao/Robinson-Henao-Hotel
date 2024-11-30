@@ -18,16 +18,8 @@ export const CustomHabitacionType = gql`
     numeroCamas: String!
   }
 
-  input HabitacionUpdateInput {
-    nombre: String
-    bloque: String
-    sesion: String
-    precio: String
-    numeroCamas: String
-  }
-
   input HabitacionWhereUniqueInput {
-    id: ID!
+    id: String!
   }
 
   type Query {
@@ -39,7 +31,6 @@ export const CustomHabitacionType = gql`
     upsertHabitacion(
       where: HabitacionWhereUniqueInput!
       create: HabitacionCreateInput!
-      update: HabitacionUpdateInput!
     ): Habitacion!
   }
 `;

@@ -1,4 +1,8 @@
-const makePost = (url: string, body: string, options: object) => {
+const makePost = (
+  url: string, 
+  body: string, 
+  options: { headers?: Record<string, string> } = {}
+) => {
   const headers = options.headers || {};
   return fetch(url, {
     body,
@@ -12,9 +16,13 @@ const makePost = (url: string, body: string, options: object) => {
   });
 };
 
-const makeJSONPost = (url: string, data: any, options: { headers: { } }) => {
+const makeJSONPost = (
+  url: string, 
+  data: any, 
+  options: { headers?: Record<string, string> } = {}
+) => {
   const body = JSON.stringify(data);
-  const headers = options.headers || {};
+  const headers = { ...options.headers };
   headers['Content-Type'] = 'application/json';
 
   return makePost(url, body, { headers });
@@ -55,8 +63,4 @@ export const createUser = (data: any) => {
   return makeJSONPost(url, body, { headers: {} });
 };
 
-export const postEmail = (data: any) => {
-  const url = '/api/useremail';
-  const headers = '';
-  return makeJSONPost(url, data, { headers });
-};
+
