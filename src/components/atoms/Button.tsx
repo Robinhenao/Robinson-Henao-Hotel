@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button"
 
-export const PrimaryButton = ({ children, ...props }) => (
+interface ButtonProps {
+  children: React.ReactNode;
+  [key: string]: any; // To allow other props like className, onClick, etc.
+}
+
+export const PrimaryButton = ({ children, ...props }: ButtonProps) => (
   <Button 
     className="bg-primary text-white hover:bg-primary/90"
     {...props}
@@ -9,7 +14,7 @@ export const PrimaryButton = ({ children, ...props }) => (
   </Button>
 )
 
-export const SecondaryButton = ({ children, ...props }) => (
+export const SecondaryButton = ({ children, ...props }: ButtonProps) => (
   <Button 
     variant="secondary"
     className="bg-secondary text-secondary-foreground"
